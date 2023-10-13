@@ -5,6 +5,7 @@
 #include "../fonts/font3x5_1.h"
 #include "navswitch.h"
 #include "display.h"
+#include "timer.h"
 
 #define PACER_RATE 500
 #define MESSAGE_RATE 10
@@ -26,10 +27,11 @@ static const pio_t cols[] =
     LEDMAT_COL4_PIO, LEDMAT_COL5_PIO
 };
 
-static const uint8_t bitmap[] =
-{
-    0, 4, 38, 36, 0
-};
+static const uint8_t bitmap1[] = {0, 4, 38, 36, 0};
+
+static const uint8_t bitmap2[] = {0, 16, 24, 16, 0};
+
+static const uint8_t bitmap3[] = {0, 0, 8, 8, 0, 0};
 
 
 void user_select(void)
@@ -44,8 +46,11 @@ static void display_column(uint8_t row_pattern, uint8_t current_column)
 
     uint8_t current_row;
     static int prev_col = 0;
+
     pio_config_set(cols[current_column], PIO_OUTPUT_LOW);
-    
+    pio_config_set(cols[prev_col], PIO_OUTPUT_HIGH);
+    prev_col = current_column;
+
     for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
 
         if ((row_pattern >> current_row) & 1) {
@@ -54,9 +59,63 @@ static void display_column(uint8_t row_pattern, uint8_t current_column)
             pio_output_high(rows[current_row]);
         }
     }
+}
 
-    pio_config_set(cols[prev_col], PIO_OUTPUT_HIGH);
-    prev_col = current_column;
+void character_select(void) 
+{
+    uint8_t current_column = 0;
+    uint16_t count = 0;
+
+    if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
+
+        tinygl_text("BIRD ");
+        timer_get();
+
+        while (count < 3200) {
+
+            user_select();
+            pacer_wait(); // Wait until next pacer tick.  
+            tinygl_update();  // Update display (refresh display and update message).  
+            navswitch_update();
+            count++;
+        }
+
+        while (1) {
+            pacer_wait();
+            display_column(bitmap2[current_column], current_column);
+            current_column++;
+    
+            if (current_column > (LEDMAT_COLS_NUM - 1)) {
+                current_column = 0;
+            }  
+        }
+    }
+
+
+
+    if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
+
+        tinygl_text("CANNON ");
+    
+        while (count < 4400) {
+
+            user_select();
+            pacer_wait(); // Wait until next pacer tick.  
+            tinygl_update();  // Update display (refresh display and update message).  
+            navswitch_update();
+            count++;
+        }
+
+        while (1) {
+            pacer_wait();
+            display_column(bitmap3[current_column], current_column);
+            current_column++;
+    
+            if (current_column > (LEDMAT_COLS_NUM - 1)) {
+                current_column = 0;
+            }  
+        }
+    }
 }
 
 
@@ -67,6 +126,7 @@ int main(void)
     system_init();
     pacer_init(PACER_RATE);
     display_init();
+    timer_init();
 
     /* Initialise tinygl. */
     tinygl_init(PACER_RATE);
@@ -77,7 +137,6 @@ int main(void)
     /* Initialise LED matrix pins.  */
     uint8_t current_row;
     uint8_t current_column;
-
 
     /* Set the message using tinygl_text().  */
     tinygl_text("CHOOSE CHARACTER ");
@@ -95,7 +154,6 @@ int main(void)
     }
     
 
-
     for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
         /* The rows are active low so configure PIO as an initially high output.  */
         pio_config_set(rows[current_row], PIO_OUTPUT_HIGH);
@@ -110,13 +168,22 @@ int main(void)
     while (1)
     {
         pacer_wait();
-        display_column(bitmap[current_column], current_column);
+        display_column(bitmap1[current_column], current_column);
         current_column++;
     
         if (current_column > (LEDMAT_COLS_NUM - 1)) {
             current_column = 0;
-        }           
+        }  
+
+        if (navswitch_push_event_p(NAVSWITCH_NORTH) || navswitch_push_event_p(NAVSWITCH_SOUTH)) {
+            break;
+        }
+
+        navswitch_update();         
     }
+
+    character_select();
+
 
     return 0;
 
