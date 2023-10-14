@@ -30,11 +30,14 @@
 #define MOVE_H
 
 #include "system.h"
-#include "pacer.h"
-#include "navswitch.h"
-#include "tinygl.h"
-#include "../fonts/font5x7_1.h"
-#include "pio.h"
+
+
+
+static void display_column(uint8_t row_pattern, uint8_t current_column);
+
+void move_bird(void);
+
+
 
 
 #endif 

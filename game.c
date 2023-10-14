@@ -7,6 +7,7 @@
 #include "navswitch.h"
 #include "display.h"
 #include "timer.h"
+#include "move.h"
 
 #define PACER_RATE 500
 #define MESSAGE_RATE 10
@@ -236,8 +237,7 @@ int main(void)
 
     character_select();
     flashing_display();
-
-
+    move_bird();
 
     return 0;
 
