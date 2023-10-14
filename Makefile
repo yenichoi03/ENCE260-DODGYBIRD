@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h
+game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h 
 	$(CC) -c $(CFLAGS) $< -o $@
 
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
@@ -46,8 +46,9 @@ pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.
 tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../drivers/display.h ../../utils/font.h ../../utils/tinygl.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+
 # Link: create ELF output file from object files.
-game.out: game.o pio.o system.o timer.o display.o navswitch.o ledmat.o font.o pacer.o tinygl.o
+game.out: game.o pio.o system.o timer.o display.o navswitch.o ledmat.o font.o pacer.o tinygl.o 
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 

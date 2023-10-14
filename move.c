@@ -1,7 +1,7 @@
 #include "system.h"
 #include "pacer.h"
 #include "navswitch.h"
-#include "ir_uart.h"
+// #include "ir_uart.h"
 #include "tinygl.h"
 #include "../fonts/font5x7_1.h"
 #include "pio.h"
@@ -84,7 +84,7 @@ int main (void)
     tinygl_font_set (&font5x7_1);
     tinygl_text_speed_set (MESSAGE_RATE);
     navswitch_init ();
-    ir_uart_init ();
+    // ir_uart_init ();
 
     /* TODO: Initialise IR driver.  */
 
