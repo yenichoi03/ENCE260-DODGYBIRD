@@ -216,8 +216,12 @@ int main(void)
 
     character_select();
     flashing_display();
-    move_bird();
 
-    return 0;
+    // if () {
+    //     move_bird();
+    // } else {
+    //     move_cannon();
+    // }
+    // return 0;
 
 }
