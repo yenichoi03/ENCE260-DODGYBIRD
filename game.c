@@ -7,6 +7,7 @@
 #include "navswitch.h"
 #include "display.h"
 #include "timer.h"
+#include "ledmat.h"
 #include "move.h"
 
 #define PACER_RATE 500
@@ -149,15 +150,7 @@ void flashing_display(void)
             count++;
         }
 
-         for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
-            /* The rows are active low so configure PIO as an initially high output.  */
-            pio_config_set(rows[current_row], PIO_OUTPUT_HIGH);
-        }
-
-        for (current_column = 0; current_column < LEDMAT_COLS_NUM; current_column++) {
-            /* The columns are active low so configure PIO as an initially high output.  */
-            pio_config_set (cols[current_column], PIO_OUTPUT_HIGH);
-        }
+        ledmat_init();
 
         count = 0;
 
@@ -187,9 +180,6 @@ int main(void)
     tinygl_text_speed_set(MESSAGE_RATE);
     tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
 
-    /* Initialise LED matrix pins.  */
-    uint8_t current_row;
-    uint8_t current_column;
 
     /* Set the message using tinygl_text().  */
     tinygl_text("CHOOSE CHARACTER ");
@@ -199,24 +189,13 @@ int main(void)
         user_select();
 
         /* Call the tinygl update function. */
-
         pacer_wait(); // Wait until next pacer tick.  
         tinygl_update();  // Update display (refresh display and update message).  
         navswitch_update();
-
     }
     
-
-    for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
-        /* The rows are active low so configure PIO as an initially high output.  */
-        pio_config_set(rows[current_row], PIO_OUTPUT_HIGH);
-    }
-
-    for (current_column = 0; current_column < LEDMAT_COLS_NUM; current_column++) {
-        /* The columns are active low so configure PIO as an initially high output.  */
-        pio_config_set (cols[current_column], PIO_OUTPUT_HIGH);
-    }
-
+    ledmat_init();
+    uint8_t current_column = 0;
 
     while (1) {
 
