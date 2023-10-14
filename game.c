@@ -68,10 +68,10 @@ void character_select(void)
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
 
-        tinygl_text("   BIRD   ");
+        tinygl_text("  BIRD   ");
         timer_get();
 
-        while (count < 3200) {
+        while (count < 2500) {
 
             pacer_wait(); // Wait until next pacer tick.  
             tinygl_update();  // Update display (refresh display and update message).  
@@ -79,7 +79,7 @@ void character_select(void)
         }
         
         count = 0;
-        while (count < 2000) {
+        while (count < 1000) {
             pacer_wait();
             display_column(bitmap2[current_column], current_column);
             current_column++;
@@ -93,9 +93,9 @@ void character_select(void)
 
     if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
 
-        tinygl_text("   CANNON   ");
+        tinygl_text("  CANNON   ");
     
-        while (count < 4000) {
+        while (count < 3000) {
 
             pacer_wait(); // Wait until next pacer tick.  
             tinygl_update();  // Update display (refresh display and update message).  
@@ -103,7 +103,7 @@ void character_select(void)
         }
 
         count = 0;
-        while (count < 1900) {
+        while (count < 1000) {
             pacer_wait();
             display_column(bitmap3[current_column], current_column);
             current_column++;
@@ -116,9 +116,9 @@ void character_select(void)
     }
 
     tinygl_font_set(&font5x7_1);
-    tinygl_text("  3   2   1   GO!");
+    tinygl_text("  3  2  1  GO!");
     
-    while (count < 7100) {
+    while (count < 5250) {
         pacer_wait(); // Wait until next pacer tick.  
         tinygl_update();  // Update display (refresh display and update message).  
         count++;
@@ -162,7 +162,7 @@ void flashing_display(void)
 
         count = 0;
 
-        while (count < 100) {
+        while (count < 80) {
             pacer_wait();
             count++;
         }
