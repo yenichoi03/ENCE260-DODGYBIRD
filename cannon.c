@@ -22,14 +22,9 @@ void fire_cannon(void)
 
 
     if (navswitch_down_p(NAVSWITCH_PUSH)) {
-
-        while (1) {
-            if ((PIND & (1<<7)) != 0) {
-                PORTC |= (1<<2); 
-            } else {
-                PORTC |= (0<<2);   
-            }
-        }
+        PORTC |= (1<<2); 
+    } else {
+        PORTC |= (0<<2);   
     }
 }
 

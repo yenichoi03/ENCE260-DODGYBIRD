@@ -1,4 +1,4 @@
-/**  @file   cannon.h
+/**  @file   move.h
      @author Yeni Choi
      @date   14 Oct 2023
      @brief  LED driver.
@@ -26,18 +26,15 @@
     @endcode
 */
 
-#ifndef CANNON_H
-#define CANNON_H
+#ifndef MOVE_H
+#define MOVE_H
 
 #include "system.h"
 #include "pacer.h"
-#include "pio.h"
-#include "tinygl.h"
 #include "navswitch.h"
-#include "display.h"
-#include "timer.h"
+#include "tinygl.h"
+#include "../fonts/font5x7_1.h"
+#include "pio.h"
 
-void fire_cannon(void);
 
 #endif 
-

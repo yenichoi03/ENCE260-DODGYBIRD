@@ -41,15 +41,10 @@ void user_select(void)
 
 static void display_column(uint8_t row_pattern, uint8_t current_column)
 {
-
-    uint8_t current_row;
     static int prev_col = 0;
-
-    pio_config_set(cols[current_column], PIO_OUTPUT_LOW);
     pio_config_set(cols[prev_col], PIO_OUTPUT_HIGH);
-    prev_col = current_column;
 
-    for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
+    for (uint8_t current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
 
         if ((row_pattern >> current_row) & 1) {
             pio_output_low(rows[current_row]);
@@ -57,6 +52,9 @@ static void display_column(uint8_t row_pattern, uint8_t current_column)
             pio_output_high(rows[current_row]);
         }
     }
+    
+    prev_col = current_column;
+    pio_config_set(cols[current_column], PIO_OUTPUT_LOW);
 }
 
 void character_select(void) 
