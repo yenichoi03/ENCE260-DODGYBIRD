@@ -5,13 +5,14 @@
 #include "../fonts/font3x5_1.h"
 #include "../fonts/font5x7_1.h"
 #include "navswitch.h"
+#include "display.h"
 #include "timer.h"
 #include "ledmat.h"
-#include "tinygl.h"
 #include "move.h"
-
+///test
 #define PACER_RATE 500
 #define MESSAGE_RATE 10
+
 
 /** Define PIO pins driving LED matrix rows.  */
 static const pio_t rows[] =
@@ -20,6 +21,7 @@ static const pio_t rows[] =
     LEDMAT_ROW4_PIO, LEDMAT_ROW5_PIO, LEDMAT_ROW6_PIO,
     LEDMAT_ROW7_PIO
 };
+
 
 /** Define PIO pins driving LED matrix columns.  */
 static const pio_t cols[] =
@@ -31,6 +33,13 @@ static const pio_t cols[] =
 static const uint8_t bitmap1[] = {0, 4, 38, 36, 0};
 static const uint8_t bitmap2[] = {0, 16, 24, 16, 0};
 static const uint8_t bitmap3[] = {0, 0, 8, 8, 0, 0};
+
+void user_select(void)
+{
+    if (navswitch_release_event_p(NAVSWITCH_PUSH)) {
+        tinygl_clear();
+    }
+}
 
 
 static void display_column(uint8_t row_pattern, uint8_t current_column)
@@ -49,13 +58,6 @@ static void display_column(uint8_t row_pattern, uint8_t current_column)
     
     prev_col = current_column;
     pio_config_set(cols[current_column], PIO_OUTPUT_LOW);
-}
-
-void user_select(void)
-{
-    if (navswitch_release_event_p(NAVSWITCH_PUSH)) {
-        tinygl_clear();
-    }
 }
 
 void character_select(void) 
@@ -150,6 +152,7 @@ void flashing_display(void)
         }
 
         ledmat_init();
+
         count = 0;
 
         while (count < 80) {
@@ -162,9 +165,10 @@ void flashing_display(void)
 }
 
 
-int main(void) 
-{
 
+
+int main(void)
+{
     /* Initialise libraries*/
     system_init();
     pacer_init(PACER_RATE);
@@ -212,44 +216,30 @@ int main(void)
         if (navswitch_push_event_p(NAVSWITCH_SOUTH)){
             count = 2;
             break;
-        }   
 
-        navswitch_update(); 
+        fire_cannon();
+    }
+
+    navswitch_update(); 
 
     }    
-
-    character_select();
-    flashing_display();
-
-    tinygl_clear();
-
-
-    // if (count == 1){
-    //     continue;
-    //     // move_bird();
-    // }
-    if (count == 2){
-        while (1) {
-            move_cannon();
-            tinygl_update();
-            navswitch_update();
-            pacer_wait();
+        character_select();
+        flashing_display();
+        if (count == 1){
+            move_bird();
         }
-    }
-    // tinygl_text("GAME OVER");
-
-    // while(1) {
-    //     pacer_wait(); 
-    //     tinygl_update();
-    // }
-
-
-
-
-
-    return 0;
-
+        if (count == 2){
+            move_cannon();
+        }
+        tinygl_text("GAME OVER");
+        while(1){
+             pacer_wait(); 
+             tinygl_update();
 }
 
 
+        return 0;
+
+
+}
 

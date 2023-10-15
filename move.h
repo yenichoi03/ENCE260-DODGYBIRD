@@ -32,10 +32,9 @@
 #include "system.h"
 
 
-void display_column(uint8_t row_pattern, uint8_t current_column);
-/* displays matrix using a bitmap array*/
 
-void move_bird(void);
+
+// void move_bird(void);
 /* moves the bird character around the screen */
 
 void move_cannon(void);

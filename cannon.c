@@ -24,17 +24,14 @@ void timer_delay_ms(uint16_t milliseconds)
 } 
 
 
-void fire_cannon(void)
+void fire_cannon(int* led_on_ticks)
 {
     navswitch_update();
 
     if (navswitch_down_p(NAVSWITCH_PUSH)) {
 
         led_set(LED1, 1);
-        timer_delay_ms(1000);
-        led_set(LED1, 0);
-        timer_delay_ms(1000);
-
+        *led_on_ticks = 900;
     } else {
         led_set(LED1, 0);
     }
@@ -52,8 +49,16 @@ int main(void)
     led_init();
     timer_init();
 
+    int led_on_ticks = 0;
+    int fire_held_down_for = 0;
     while (1) {
-        fire_cannon();
+        if (led_on_ticks == 0) {
+            led_set(LED1, 0);
+        }
+        pacer_wait();
+        fire_cannon(&led_on_ticks, &fire_held_down_for);
+        # other functions (ir, move_ball functions)
+        led_on_ticks--;
     }
 
 

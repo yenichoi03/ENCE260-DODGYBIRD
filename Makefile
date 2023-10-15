@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h ../../assignment/group_416/move.h ../../drivers/ledmat.h ../../drivers/led.h 
+game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h ../../drivers/ledmat.h ../../assignment/group_416/move.h ../../drivers/led.h 
 	$(CC) -c $(CFLAGS) $< -o $@
 
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
@@ -49,7 +49,7 @@ pacer.o: ../../utils/pacer.c ../../drivers/avr/system.h ../../drivers/avr/timer.
 tinygl.o: ../../utils/tinygl.c ../../drivers/avr/system.h ../../drivers/display.h ../../utils/font.h ../../utils/tinygl.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
-move.o: ../../assignment/group_416/move.c ../../drivers/navswitch.h ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../utils/pacer.h ../../drivers/ledmat.h ../../assignment/group_416/move.h
+move.o: ../../assignment/group_416/move.c ../../drivers/navswitch.h ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../utils/pacer.h ../../utils/tinygl.h ../../assignment/group_416/move.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 
