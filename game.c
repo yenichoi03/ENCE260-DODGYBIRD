@@ -220,6 +220,7 @@ int main(void)
 }    
 
 
+<<<<<<< HEAD
         character_select();
         flashing_display();
         if (count == 1){
@@ -237,6 +238,17 @@ int main(void)
 
         return 0;
 
+=======
+    character_select();
+    flashing_display();
+
+    // if () {
+    //     move_bird();
+    // } else {
+    //     move_cannon();
+    // }
+    // return 0;
+>>>>>>> 0dc4c7c5eb06efecdb7bde42a516023078ee0281
 
 }
 
