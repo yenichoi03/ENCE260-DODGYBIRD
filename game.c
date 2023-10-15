@@ -196,9 +196,10 @@ int main(void)
     
     ledmat_init();
     uint8_t current_column = 0;
+    int count;
+  
 
-    while (1) {
-
+ while (1) {
         pacer_wait();
         display_column(bitmap1[current_column], current_column);
         current_column++;
@@ -207,17 +208,35 @@ int main(void)
             current_column = 0;
         }  
 
-        if (navswitch_push_event_p(NAVSWITCH_NORTH) || navswitch_push_event_p(NAVSWITCH_SOUTH)) {
+        if (navswitch_push_event_p(NAVSWITCH_NORTH)){
+            count = 1;
             break;
         }
+        if (navswitch_push_event_p(NAVSWITCH_SOUTH)){
+            count = 2;
+            break;
+}
+        navswitch_update(); 
+}    
 
-        navswitch_update();         
-    }
 
-    character_select();
-    flashing_display();
-    move_bird();
+        character_select();
+        flashing_display();
+        if (count == 1){
+            move_bird();
+        }
+        if (count == 2){
+            move_cannon();
+        }
+        tinygl_text("GAME OVER");
+        while(1){
+             pacer_wait(); 
+             tinygl_update();
+}
 
-    return 0;
+
+        return 0;
+
 
 }
+

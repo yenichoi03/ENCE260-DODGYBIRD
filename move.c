@@ -54,9 +54,16 @@ void move_bird(void)
     uint8_t current_column =  0b0010000;
     uint8_t current_column2 = 0b0011000;
     uint8_t current_column3 = 0b0010000;
+    uint8_t x = 3
+    uint8_t y = 4;
+    int time = 0;
 
     while (1)
     {
+       
+        if (time >= 1666){
+        break;
+}
         pacer_wait();
         navswitch_update();
         
@@ -84,38 +91,45 @@ void move_bird(void)
         display_column(current_column2, current_row);
         pacer_wait();
         display_column(current_column3, current_row + 1);
-        
+        time += 1;
+     
+
     }
 
 }
 
-// int main(void)
-// {
-//     system_init();
-//     navswitch_init();
-//     pacer_init(PACER_RATE);
-//     ledmat_init();
-//     uint8_t current_column = 3;
-//     uint8_t current_column3 = 0b0001000;
-//     uint8_t current_column4 = 0b0001000;
+void move_cannon(void)
+{
+    system_init();
+    navswitch_init();
+    pacer_init(PACER_RATE);
+    ledmat_init();
+    uint8_t current_column = 3;
+    uint8_t current_column3 = 0b0001000;
+    uint8_t current_column4 = 0b0001000;
+    int time = 0;
+    while (1)
+    {
+         if (time >= 1666){
+        break;
+}
+        navswitch_update();
 
-//     while (1)
-//     {
-//         navswitch_update();
-
-//         if (navswitch_push_event_p(NAVSWITCH_NORTH) && (current_column3 != (1<<0))){
-//             current_column3 = current_column3 >> 1;
-//             current_column4 = current_column4 >> 1;
-//         }
-//         if (navswitch_push_event_p(NAVSWITCH_SOUTH) && (current_column3 != (1<<5))){
-//             current_column3 = current_column3 << 1;
-//             current_column4 = current_column4 << 1;
-//         }           
+        if (navswitch_push_event_p(NAVSWITCH_NORTH) && (current_column3 != (1<<0))){
+            current_column3 = current_column3 >> 1;
+            current_column4 = current_column4 >> 1;
+        }
+        if (navswitch_push_event_p(NAVSWITCH_SOUTH) && (current_column3 != (1<<5))){
+            current_column3 = current_column3 << 1;
+            current_column4 = current_column4 << 1;
+        }           
  
-//         display_column(current_column3, current_column);
-//         pacer_wait();
-//         display_column(current_column4, current_column + 1);
-//         pacer_wait();
+        display_column(current_column3, current_column);
+        pacer_wait();
+        display_column(current_column4, current_column + 1);
+        pacer_wait();
+        time += 1;
 
-//     }
-// }
+    }
+}
+

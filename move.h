@@ -36,6 +36,7 @@
 static void display_column(uint8_t row_pattern, uint8_t current_column);
 
 void move_bird(void);
+void move_cannon(void);
 
 
 
