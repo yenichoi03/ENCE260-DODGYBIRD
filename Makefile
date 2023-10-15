@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h ../../assignment/group_416/move.h
+game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h ../../assignment/group_416/move.h ../../drivers/ledmat.h ../../drivers/led.h 
 	$(CC) -c $(CFLAGS) $< -o $@
 
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
@@ -32,6 +32,9 @@ display.o: ../../drivers/display.c ../../drivers/avr/system.h ../../drivers/disp
 	$(CC) -c $(CFLAGS) $< -o $@
 
 ledmat.o: ../../drivers/ledmat.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/ledmat.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+led.o: ../../drivers/led.c ../../drivers/avr/pio.h ../../drivers/avr/system.h ../../drivers/led.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 font.o: ../../utils/font.c ../../drivers/avr/system.h ../../utils/font.h
@@ -51,7 +54,7 @@ move.o: ../../assignment/group_416/move.c ../../drivers/navswitch.h ../../driver
 
 
 # Link: create ELF output file from object files.
-game.out: game.o pio.o system.o timer.o display.o navswitch.o ledmat.o font.o pacer.o tinygl.o move.o
+game.out: game.o pio.o system.o timer.o display.o navswitch.o ledmat.o font.o pacer.o tinygl.o move.o led.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
