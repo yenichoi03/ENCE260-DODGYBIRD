@@ -220,7 +220,7 @@ int main(void)
     character_select();
     flashing_display();
     tinygl_clear();
-
+    uint16_t game_over_ticks = 5000;
 
     if (select_char == 1){
         while (1) {
@@ -228,6 +228,11 @@ int main(void)
             tinygl_update();
             navswitch_update();
             pacer_wait();
+            game_over_ticks--;
+
+            if (game_over_ticks == 0) {
+                break;
+            }
         }
     }
 
@@ -237,19 +242,26 @@ int main(void)
             tinygl_update();
             navswitch_update();
             pacer_wait();
+            game_over_ticks--;
+
+            if (game_over_ticks == 0) {
+                break;
+            }
         }
     }
-    // tinygl_text("GAME OVER");
 
-    // while(1) {
-    //     pacer_wait(); 
-    //     tinygl_update();
-    // }
+    tinygl_text("GAME OVER");
 
+    while(1) {
+        game_over_ticks++;
+        pacer_wait(); 
+        tinygl_update();
 
-
-
-
+        if (game_over_ticks == 5500) {
+            break;
+        }
+    }
+    display_clear();
     return 0;
 
 }
