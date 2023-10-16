@@ -4,63 +4,6 @@
 #include "pio.h"
 #include "tinygl.h"
 
-// void move_bird(void)
-// {
-
-//     system_init();
-//     navswitch_init();
-//     pacer_init(PACER_RATE);
-//     ledmat_init();
- 
-//     uint8_t current_row = 2;
-//     uint8_t current_column =  0b0010000;
-//     uint8_t current_column2 = 0b0011000;
-//     uint8_t current_column3 = 0b0010000;
-//     uint8_t x = 3
-//     uint8_t y = 4;
-//     int time = 0;
-
-//     while (1)
-//     {
-       
-//         if (time >= 1666){
-//         break;
-// }
-//         pacer_wait();
-//         navswitch_update();
-        
-//         if ((navswitch_push_event_p(NAVSWITCH_EAST)) && (current_row + 1 < 4)){
-//                 current_row++;
-//         }
-//         if ((navswitch_push_event_p(NAVSWITCH_WEST)) && (current_row - 1 > 0)){
-//                 current_row--;    
-//         }
-
-//         if ((navswitch_push_event_p(NAVSWITCH_NORTH)) && (current_column != (2<<0))){
-//                 current_column = (current_column>>1);
-//                 current_column2 = (current_column2>>1);
-//                 current_column3 = (current_column3>>1);
-//         }
-//        if ((navswitch_push_event_p(NAVSWITCH_SOUTH)) && (current_column != (1<<5))){
-//                 current_column = (current_column<<1);
-//                 current_column2 = (current_column2<<1);
-//                 current_column3 = (current_column3<<1);
-
-//         }           
-        
-//         display_column(current_column, current_row - 1);
-//         pacer_wait();
-//         display_column(current_column2, current_row);
-//         pacer_wait();
-//         display_column(current_column3, current_row + 1);
-//         time += 1;
-     
-
-//     }
-
-// }
-
-
 
 void move_cannon(void) {
 
@@ -121,3 +64,63 @@ void move_cannon(void) {
     }
 }
 
+void move_bird(void)
+{
+
+    static tinygl_point_t pos1 = {1, 4};
+    static tinygl_point_t pos2 = {3, 4};
+    static tinygl_point_t pos_tip = {2, 3}; 
+
+
+    if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
+        if (pos1.y > 1) {
+            tinygl_draw_point(pos_tip, 0);
+            tinygl_draw_line(pos1, pos2, 0);
+            pos1.y--;
+            pos2.y--;
+            pos_tip.y--;
+            tinygl_draw_line(pos1, pos2, 1);
+            tinygl_draw_point(pos_tip, 1);
+        }
+    }
+
+    if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
+        if (pos1.y < LEDMAT_ROWS_NUM - 2) {
+            tinygl_draw_point(pos_tip, 0);
+            tinygl_draw_line(pos1, pos2, 0);
+            pos1.y++;
+            pos2.y++;
+            pos_tip.y++;
+            tinygl_draw_line(pos1, pos2, 1);
+            tinygl_draw_point(pos_tip, 1);
+        }
+    }
+
+    if (navswitch_push_event_p(NAVSWITCH_EAST)) {
+        if (pos2.x < LEDMAT_COLS_NUM - 1) {
+            tinygl_draw_point(pos_tip, 0);
+            tinygl_draw_line(pos1, pos2, 0);
+            pos1.x++;
+            pos2.x++;
+            pos_tip.x++;
+            tinygl_draw_line(pos1, pos2, 1);
+            tinygl_draw_point(pos_tip, 1);
+        }
+    }
+
+    if (navswitch_push_event_p(NAVSWITCH_WEST)) {
+        if (pos1.x > LEDMAT_COLS_NUM - 5) {
+            tinygl_draw_point(pos_tip, 0);
+            tinygl_draw_line(pos1, pos2, 0);
+            pos1.x--;
+            pos2.x--;
+            pos_tip.x--;
+            tinygl_draw_line(pos1, pos2, 1);
+            tinygl_draw_point(pos_tip, 1);
+        }
+    }
+
+    
+
+
+}

@@ -34,12 +34,11 @@
 
 
 
-// void move_bird(void);
-/* moves the bird character around the screen */
-
 void move_cannon(void);
 /* moves the cannon character vertically */
 
+void move_bird(void);
+/* moves the bird character around the screen */
 
 
 #endif 

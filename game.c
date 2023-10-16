@@ -11,7 +11,7 @@
 #include "move.h"
 
 #define PACER_RATE 500
-#define MESSAGE_RATE 10
+#define MESSAGE_RATE 20
 
 /** Define PIO pins driving LED matrix rows.  */
 static const pio_t rows[] =
@@ -30,7 +30,7 @@ static const pio_t cols[] =
 
 static const uint8_t bitmap1[] = {0, 4, 38, 36, 0};
 static const uint8_t bitmap2[] = {0, 16, 24, 16, 0};
-static const uint8_t bitmap3[] = {0, 0, 8, 8, 0, 0};
+static const uint8_t bitmap3[] = {0, 0, 0, 16, 16, 0};
 
 
 static void display_column(uint8_t row_pattern, uint8_t current_column)
@@ -193,7 +193,7 @@ int main(void)
     
     ledmat_init();
     uint8_t current_column = 0;
-    int count;
+    int select_char = 0;
   
 
     while (1) {
@@ -206,29 +206,32 @@ int main(void)
         }  
 
         if (navswitch_push_event_p(NAVSWITCH_NORTH)){
-            count = 1;
+            select_char = 1;
             break;
         }
         if (navswitch_push_event_p(NAVSWITCH_SOUTH)){
-            count = 2;
+            select_char = 2;
             break;
         }   
 
         navswitch_update(); 
-
     }    
 
     character_select();
     flashing_display();
-
     tinygl_clear();
 
 
-    // if (count == 1){
-    //     continue;
-    //     // move_bird();
-    // }
-    if (count == 2){
+    if (select_char == 1){
+        while (1) {
+            move_bird();
+            tinygl_update();
+            navswitch_update();
+            pacer_wait();
+        }
+    }
+
+    if (select_char == 2){
         while (1) {
             move_cannon();
             tinygl_update();
