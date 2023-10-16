@@ -9,6 +9,9 @@
 #include "ledmat.h"
 #include "tinygl.h"
 #include "move.h"
+#include "ir_uart.h"
+#include "usart1.h"
+#include "timer0.h"
 
 #define PACER_RATE 500
 #define MESSAGE_RATE 20
@@ -167,6 +170,7 @@ int main(void)
 
     /* Initialise libraries*/
     system_init();
+    ir_uart_init();
     pacer_init(PACER_RATE);
     display_init();
     timer_init();
@@ -220,7 +224,7 @@ int main(void)
     character_select();
     flashing_display();
     tinygl_clear();
-    uint16_t game_over_ticks = 5000;
+    // uint16_t game_over_ticks = 5000;
 
     if (select_char == 1){
         while (1) {
@@ -228,11 +232,13 @@ int main(void)
             tinygl_update();
             navswitch_update();
             pacer_wait();
-            game_over_ticks--;
 
-            if (game_over_ticks == 0) {
-                break;
-            }
+
+            // game_over_ticks--;
+
+            // if (game_over_ticks == 0) {
+            //     break;
+            // }
         }
     }
 
@@ -242,26 +248,26 @@ int main(void)
             tinygl_update();
             navswitch_update();
             pacer_wait();
-            game_over_ticks--;
+            // game_over_ticks--;
 
-            if (game_over_ticks == 0) {
-                break;
-            }
+            // if (game_over_ticks == 0) {
+            //     break;
+            // }
         }
     }
 
-    tinygl_text("GAME OVER");
+    // tinygl_text("GAME OVER");
 
-    while(1) {
-        game_over_ticks++;
-        pacer_wait(); 
-        tinygl_update();
+    // while(1) {
+    //     game_over_ticks++;
+    //     pacer_wait(); 
+    //     tinygl_update();
 
-        if (game_over_ticks == 5500) {
-            break;
-        }
-    }
-    display_clear();
+    //     if (game_over_ticks == 5500) {
+    //         break;
+    //     }
+    // }
+    // display_clear();
     return 0;
 
 }

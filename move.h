@@ -32,7 +32,8 @@
 #include "system.h"
 
 
-
+void display_character(char character);
+/* A character buffer */
 
 void move_cannon(void);
 /* moves the cannon character vertically */
