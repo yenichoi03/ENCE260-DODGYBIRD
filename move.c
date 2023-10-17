@@ -6,11 +6,57 @@
 #include "ir_uart.h"
 #include "timer.h"
 #include "usart1.h"
+#include "ledmat.h"
 
-#define PACER_RATE 500
-#define MESSAGE_RATE 20
+static const pio_t rows[] =
+{
+    LEDMAT_ROW1_PIO, LEDMAT_ROW2_PIO, LEDMAT_ROW3_PIO, 
+    LEDMAT_ROW4_PIO, LEDMAT_ROW5_PIO, LEDMAT_ROW6_PIO,
+    LEDMAT_ROW7_PIO
+};
+
+/** Define PIO pins driving LED matrix columns.  */
+static const pio_t cols[] =
+{
+    LEDMAT_COL1_PIO, LEDMAT_COL2_PIO, LEDMAT_COL3_PIO,
+    LEDMAT_COL4_PIO, LEDMAT_COL5_PIO
+};
 
 
+
+
+
+void flashing_display(void) 
+{
+    uint8_t current_row;
+    uint8_t current_column;
+    uint16_t count = 0;
+
+    for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
+        /* The rows are active low so configure PIO as an initially high output.  */
+        pio_config_set(rows[current_row], PIO_OUTPUT_LOW);
+    }
+
+    for (current_column = 0; current_column < LEDMAT_COLS_NUM; current_column++) {
+        /* The columns are active low so configure PIO as an initially high output.  */
+        pio_config_set (cols[current_column], PIO_OUTPUT_LOW);
+    }
+
+    
+    while (count < 50) {
+        pacer_wait();
+        count++;
+    }
+
+    ledmat_init();
+    count = 0;
+
+    while (count < 80) {
+        pacer_wait();
+        count++;
+    }
+
+}
 
 void move_cannon(void) {
     /* Can only shoot from rows 0-5*/
@@ -79,6 +125,7 @@ void move_cannon(void) {
 
 }
 
+
 void move_bird(void)
 {
     /* Can only dodge from rows 1-6 */
@@ -96,6 +143,7 @@ void move_bird(void)
             pos_tip.y--;
             tinygl_draw_line(pos1, pos2, 1);
             tinygl_draw_point(pos_tip, 1);
+
         }
     }
 
@@ -108,6 +156,7 @@ void move_bird(void)
             pos_tip.y++;
             tinygl_draw_line(pos1, pos2, 1);
             tinygl_draw_point(pos_tip, 1);
+
         }
     }
 
@@ -120,6 +169,7 @@ void move_bird(void)
             pos_tip.x++;
             tinygl_draw_line(pos1, pos2, 1);
             tinygl_draw_point(pos_tip, 1);
+
         }
     }
 
@@ -141,7 +191,7 @@ void move_bird(void)
     static tinygl_point_t pos_ball = {0, 0}; 
     static uint8_t row = 0;
     uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
-    
+
     if (ir_uart_read_ready_p()) {
         row = ir_uart_getc(); 
         if (row < LEDMAT_ROWS_NUM) {
@@ -161,18 +211,35 @@ void move_bird(void)
         if (count == 150) {
             tinygl_draw_point(pos_ball, 0);
             pos_ball.x++;
+
+            if (tinygl_pixel_get(pos_ball) == 1) { 
+                flashing_display();
+            }
+
             tinygl_draw_point(pos_ball, 1);
+
         }
 
         if (count == 250) {
             tinygl_draw_point(pos_ball, 0);
             pos_ball.x++;
+
+            if (tinygl_pixel_get(pos_ball) == 1) { 
+                flashing_display();
+            }
+
             tinygl_draw_point(pos_ball, 1);
+
         }
 
         if (count == 350) {
             tinygl_draw_point(pos_ball, 0);
             pos_ball.x++;
+            
+            if (tinygl_pixel_get(pos_ball) == 1) { 
+                flashing_display();
+            }
+
             tinygl_draw_point(pos_ball, 1);
         }
 

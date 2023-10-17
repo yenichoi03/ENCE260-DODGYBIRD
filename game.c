@@ -13,6 +13,7 @@
 #include "usart1.h"
 #include "timer0.h"
 
+
 #define PACER_RATE 500
 #define MESSAGE_RATE 20
 
@@ -125,44 +126,13 @@ void character_select(void)
         tinygl_update();  // Update display (refresh display and update message).  
         count++;
     }
-}
-
-void flashing_display(void) 
-{
-    uint8_t current_row;
-    uint8_t current_column;
 
     for (int i = 0; i < 4; i++) {
-
-        uint16_t count = 0;
-
-        for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
-            /* The rows are active low so configure PIO as an initially high output.  */
-            pio_config_set(rows[current_row], PIO_OUTPUT_LOW);
-        }
-
-        for (current_column = 0; current_column < LEDMAT_COLS_NUM; current_column++) {
-            /* The columns are active low so configure PIO as an initially high output.  */
-            pio_config_set (cols[current_column], PIO_OUTPUT_LOW);
-        }
-
-        
-        while (count < 50) {
-            pacer_wait();
-            count++;
-        }
-
-        ledmat_init();
-        count = 0;
-
-        while (count < 80) {
-            pacer_wait();
-            count++;
-        }
-        
+        flashing_display();
     }
-
 }
+
+    
 
 
 int main(void) 
