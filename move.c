@@ -139,11 +139,12 @@ void move_bird(void)
     static int count = 0;
     static bool is_ball = false;
     static tinygl_point_t pos_ball = {0, 0}; 
-    uint8_t row_num[6] = {6, 5, 4, 3, 2, 1};
     static uint8_t row = 0;
+    uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
+    
     if (ir_uart_read_ready_p()) {
         row = ir_uart_getc(); 
-        if (row < LEDMAT_COLS_NUM - 1) {
+        if (row < LEDMAT_ROWS_NUM) {
             is_ball = true;
         }
     }
@@ -176,6 +177,12 @@ void move_bird(void)
         }
 
         if (count == 450) {
+            tinygl_draw_point(pos_ball, 0);
+            pos_ball.x++;
+            tinygl_draw_point(pos_ball, 1);
+        }
+
+        if (count == 550) {
             tinygl_draw_point(pos_ball, 0);
             is_ball = false;
             count = 0;
