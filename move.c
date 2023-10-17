@@ -8,6 +8,9 @@
 #include "usart1.h"
 #include "ledmat.h"
 
+
+
+/** Define PIO pins driving LED matrix rows.  */
 static const pio_t rows[] =
 {
     LEDMAT_ROW1_PIO, LEDMAT_ROW2_PIO, LEDMAT_ROW3_PIO, 
@@ -21,9 +24,6 @@ static const pio_t cols[] =
     LEDMAT_COL1_PIO, LEDMAT_COL2_PIO, LEDMAT_COL3_PIO,
     LEDMAT_COL4_PIO, LEDMAT_COL5_PIO
 };
-
-
-
 
 
 void flashing_display(void) 
@@ -58,7 +58,8 @@ void flashing_display(void)
 
 }
 
-void move_cannon(void) {
+void move_cannon(void) 
+{
     /* Can only shoot from rows 0-5*/
     
     static tinygl_point_t pos1 = {4, 3};
@@ -133,6 +134,9 @@ void move_bird(void)
     static tinygl_point_t pos1 = {1, 4};
     static tinygl_point_t pos2 = {3, 4};
     static tinygl_point_t pos_tip = {2, 3}; 
+    static tinygl_point_t life_pos1 = {2, 0};
+    static tinygl_point_t life_pos2 = {4, 0};
+    tinygl_draw_line(life_pos1, life_pos2, 1);
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
         if (pos1.y > 2) {
@@ -191,6 +195,7 @@ void move_bird(void)
     static tinygl_point_t pos_ball = {0, 0}; 
     static uint8_t row = 0;
     uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
+    bool flash = false; 
 
     if (ir_uart_read_ready_p()) {
         row = ir_uart_getc(); 
@@ -213,7 +218,7 @@ void move_bird(void)
             pos_ball.x++;
 
             if (tinygl_pixel_get(pos_ball) == 1) { 
-                flashing_display();
+                flash = true;
             }
 
             tinygl_draw_point(pos_ball, 1);
@@ -225,7 +230,7 @@ void move_bird(void)
             pos_ball.x++;
 
             if (tinygl_pixel_get(pos_ball) == 1) { 
-                flashing_display();
+                flash = true;
             }
 
             tinygl_draw_point(pos_ball, 1);
@@ -237,7 +242,7 @@ void move_bird(void)
             pos_ball.x++;
             
             if (tinygl_pixel_get(pos_ball) == 1) { 
-                flashing_display();
+                flash = true;
             }
 
             tinygl_draw_point(pos_ball, 1);
@@ -254,6 +259,22 @@ void move_bird(void)
             is_ball = false;
             count = 0;
         }
-    }
+        
+        
+        if (flash) {
+            flashing_display();
+            /*Will need to create a struct*/
+            tinygl_draw_line(life_pos1, life_pos2, 0);
+            life_pos1.x++;
+            tinygl_draw_line(life_pos1, life_pos2, 1);
 
+            if (life_pos1.x == 4) {
+                tinygl_draw_line(life_pos1, life_pos2, 0);
+            }
+        }
+
+    }
 }
+
+
+
