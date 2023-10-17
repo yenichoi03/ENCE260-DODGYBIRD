@@ -130,13 +130,15 @@ void move_cannon(void)
 void move_bird(void)
 {
     /* Can only dodge from rows 1-6 */
- 
     static tinygl_point_t pos1 = {1, 4};
     static tinygl_point_t pos2 = {3, 4};
     static tinygl_point_t pos_tip = {2, 3}; 
     static tinygl_point_t life_pos1 = {2, 0};
-    static tinygl_point_t life_pos2 = {4, 0};
+    static tinygl_point_t life_pos2 = {5, 0};
+    static tinygl_point_t life_pos3 = {2, 0};
+    static tinygl_point_t life_pos4 = {4, 0};
     tinygl_draw_line(life_pos1, life_pos2, 1);
+ 
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
         if (pos1.y > 2) {
@@ -267,12 +269,12 @@ void move_bird(void)
             tinygl_draw_line(life_pos1, life_pos2, 0);
             life_pos1.x++;
             tinygl_draw_line(life_pos1, life_pos2, 1);
-
-            if (life_pos1.x == 4) {
-                tinygl_draw_line(life_pos1, life_pos2, 0);
+            if (life_pos1.x >= 4 ) {
+                tinygl_draw_line(life_pos3, life_pos4, 0);
             }
+            
         }
-
+    
     }
 }
 
