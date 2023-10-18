@@ -64,11 +64,11 @@ int main(void)
         }  
 
         if (navswitch_push_event_p(NAVSWITCH_NORTH)){
-            select_char = 1;
+            select_char = 1; //picked bird 
             break;
         }
         if (navswitch_push_event_p(NAVSWITCH_SOUTH)){
-            select_char = 2;
+            select_char = 2; //picked cannon
             break;
         }   
 
@@ -77,8 +77,7 @@ int main(void)
 
     character_select();
     tinygl_clear();
-    // uint16_t game_over_ticks = 5000;
-
+    // uint16_t game_ticks = 10000;
     tinygl_point_t pos_cannon1 = {4, 5};
     tinygl_point_t pos_cannon2 = {3, 5};
 
@@ -90,12 +89,6 @@ int main(void)
             tinygl_update();
             navswitch_update();
             pacer_wait();
-
-            // game_over_ticks--;
-
-            // if (game_over_ticks == 0) {
-            //     break;
-            // }
         }
     }
 
@@ -107,26 +100,22 @@ int main(void)
             cannonball_fire(pos_cannon1);
             tinygl_update();
             pacer_wait();
-            // game_over_ticks--;
-
-            // if (game_over_ticks == 0) {
-            //     break;
-            // }
         }
     }
 
     // tinygl_text("GAME OVER");
 
     // while(1) {
-    //     game_over_ticks++;
+    //     game_ticks++;
     //     pacer_wait(); 
     //     tinygl_update();
 
-    //     if (game_over_ticks == 5500) {
+    //     if (game_ticks == 5500) {
     //         break;
     //     }
     // }
-    // display_clear();
+    
+    display_clear();
     return 0;
 
 }

@@ -47,8 +47,6 @@ static const pio_t cols[] =
     LEDMAT_COL4_PIO, LEDMAT_COL5_PIO
 };
 
-void display_character(char character);
-/* A character buffer */
 
 void move_cannon(tinygl_point_t* pos_cannon1, tinygl_point_t* pos_cannon2);
 /* moves the cannon character vertically */
@@ -56,9 +54,7 @@ void move_cannon(tinygl_point_t* pos_cannon1, tinygl_point_t* pos_cannon2);
 void move_bird(void);
 /* moves the bird character around the screen */
 
-void flashing_display(void);
 
-void ball_incoming(void);
 
 
 #endif 
