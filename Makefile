@@ -16,7 +16,7 @@ all: game.out
 
 
 # Compile: create object files from C source files.
-game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h ../../drivers/ledmat.h ../../drivers/led.h ../../drivers/avr/ir_uart.h ../../drivers/avr/timer0.h ../../drivers/avr/bits.h ../../drivers/avr/prescale.h move.h start.h 
+game.o: game.c ../../drivers/avr/system.h ../../drivers/display.h ../../drivers/navswitch.h ../../fonts/font3x5_1.h ../../utils/font.h ../../utils/pacer.h ../../utils/tinygl.h ../../fonts/font5x7_1.h ../../drivers/ledmat.h ../../drivers/led.h ../../drivers/avr/ir_uart.h ../../drivers/avr/timer0.h ../../drivers/avr/bits.h ../../drivers/avr/prescale.h move.h start.h ball.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
 pio.o: ../../drivers/avr/pio.c ../../drivers/avr/pio.h ../../drivers/avr/system.h
@@ -67,8 +67,11 @@ prescale.o: ../../drivers/avr/prescale.c ../../drivers/avr/system.h ../../driver
 start.o: ../../assignment/group_416/start.c ../../drivers/avr/system.h ../../drivers/avr/pio.h ../../utils/pacer.h ../../drivers/ledmat.h ../../assignment/group_416/move.h ../../assignment/group_416/start.h ../../utils/tinygl.h ../../drivers/navswitch.h ../../drivers/avr/usart1.h ../../fonts/font3x5_1.h ../../fonts/font5x7_1.h
 	$(CC) -c $(CFLAGS) $< -o $@
 
+ball.o: ../../assignment/group_416/ball.c ../../drivers/avr/system.h ../../drivers/navswitch.h ../../utils/tinygl.h ../../drivers/avr/ir_uart.h ../../drivers/avr/timer0.h ../../drivers/avr/usart1.h ../../assignment/group_416/start.h ../../assignment/group_416/ball.h 
+	$(CC) -c $(CFLAGS) $< -o $@
+	
 # Link: create ELF output file from object files.
-game.out: game.o pio.o system.o timer.o display.o navswitch.o ledmat.o font.o pacer.o tinygl.o led.o ir_uart.o usart1.o timer0.o prescale.o move.o start.o
+game.out: game.o pio.o system.o timer.o display.o navswitch.o ledmat.o font.o pacer.o tinygl.o led.o ir_uart.o usart1.o timer0.o prescale.o move.o start.o ball.o
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 	$(SIZE) $@
 
