@@ -16,7 +16,7 @@ void move_cannon(tinygl_point_t *pos_cannon1)
 {
     /* Can only shoot from rows 0-5*/
     
-    static tinygl_point_t pos_cannon2 = {3, 3};
+    static tinygl_point_t pos_cannon2 = {3, 5};
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
         if ((*pos_cannon1).y > 0) {
@@ -89,12 +89,7 @@ void move_bird(void)
     static tinygl_point_t pos1 = {1, 4};
     static tinygl_point_t pos2 = {3, 4};
     static tinygl_point_t pos_tip = {2, 3}; 
-    static tinygl_point_t life_pos1 = {2, 0};
-    static tinygl_point_t life_pos2 = {5, 0};
-    static tinygl_point_t life_pos3 = {2, 0};
-    static tinygl_point_t life_pos4 = {4, 0};
-    tinygl_draw_line(life_pos1, life_pos2, 1);
-    
+
     tinygl_draw_line(pos1, pos2, 1);
     tinygl_draw_point(pos_tip, 1);
 
@@ -149,8 +144,15 @@ void move_bird(void)
             tinygl_draw_point(pos_tip, 1);
         }
     }
-
+}
     
+void ball_incoming(void)
+{
+    static tinygl_point_t life_pos1 = {2, 0};
+    static tinygl_point_t life_pos2 = {5, 0};
+    static tinygl_point_t life_pos3 = {2, 0};
+    static tinygl_point_t life_pos4 = {4, 0};
+    tinygl_draw_line(life_pos1, life_pos2, 1);
     static int count = 0;
     static bool is_ball = false;
     static tinygl_point_t pos_ball = {0, 0}; 
@@ -235,7 +237,17 @@ void move_bird(void)
         }
     
     }
-}
+}   
+
+
+
+    
+
+
+
+
+
+
 
 
 

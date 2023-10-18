@@ -60,4 +60,7 @@ void move_bird(void);
 
 void flashing_display(void);
 
+void ball_incoming(void);
+
+
 #endif 

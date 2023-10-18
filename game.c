@@ -78,15 +78,16 @@ int main(void)
     flashing_display();
     tinygl_clear();
     // uint16_t game_over_ticks = 5000;
-    tinygl_point_t pos_cannon1 = {4, 3};
+    tinygl_point_t pos_cannon1 = {4, 5};
+
 
     if (select_char == 1){
         while (1) {
             move_bird();
+            ball_incoming();
             tinygl_update();
             navswitch_update();
             pacer_wait();
-
 
             // game_over_ticks--;
 
