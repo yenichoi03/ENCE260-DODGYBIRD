@@ -71,14 +71,14 @@ void user_select(void)
 
 void sync(void) 
 {
-    
-    tinygl_text("SYNCING ");
+    tinygl_font_set(&font3x5_1);
+    tinygl_text("PUSH TO START ");
     while (1) {
          /* Call the tinygl update function. */
         pacer_wait(); // Wait until next pacer tick.  
         tinygl_update();  // Update display (refresh display and update message).  
         navswitch_update();
-        if (navswitch_push_event_p (NAVSWITCH_NORTH)) {
+        if (navswitch_push_event_p(NAVSWITCH_NORTH) || navswitch_push_event_p(NAVSWITCH_EAST) || navswitch_push_event_p(NAVSWITCH_SOUTH) || navswitch_push_event_p(NAVSWITCH_WEST)) {
           ir_uart_putc ('S');
           break;
             }

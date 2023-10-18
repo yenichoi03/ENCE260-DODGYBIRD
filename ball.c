@@ -9,14 +9,15 @@
 void cannonball_fire(tinygl_point_t pos_cannon1)
 {
     static int count = 0;
-    static bool is_ball = false;
+    static bool is_ball = true;
     static tinygl_point_t pos_ball = {0, 0}; 
 
+
     if (navswitch_release_event_p(NAVSWITCH_PUSH)) {
-        is_ball = true;
+        is_ball = false;
     }
 
-    if (is_ball) {
+    if (!is_ball) {
         count++;
 
         if (count == 50) {
@@ -40,7 +41,7 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
 
         if (count == 350) {
             tinygl_draw_point(pos_ball, 0);
-            is_ball = false;
+            is_ball = true;
             count = 0;
 
             if (ir_uart_write_ready_p()) {

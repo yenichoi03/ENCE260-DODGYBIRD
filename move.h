@@ -50,10 +50,8 @@ static const pio_t cols[] =
 void display_character(char character);
 /* A character buffer */
 
-void move_cannon(tinygl_point_t* pos_cannon1);
+void move_cannon(tinygl_point_t* pos_cannon1, tinygl_point_t* pos_cannon2);
 /* moves the cannon character vertically */
-
-void cannonball_fire(tinygl_point_t pos_cannon1);
 
 void move_bird(void);
 /* moves the bird character around the screen */

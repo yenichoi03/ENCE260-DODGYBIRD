@@ -12,6 +12,7 @@
 #include "usart1.h"
 #include "timer0.h"
 #include "start.h"
+#include "ball.h"
 
 
 
@@ -75,10 +76,11 @@ int main(void)
     }    
 
     character_select();
-    flashing_display();
     tinygl_clear();
     // uint16_t game_over_ticks = 5000;
+
     tinygl_point_t pos_cannon1 = {4, 5};
+    tinygl_point_t pos_cannon2 = {3, 5};
 
 
     if (select_char == 1){
@@ -98,11 +100,12 @@ int main(void)
     }
 
     if (select_char == 2){
+        tinygl_draw_line(pos_cannon1, pos_cannon2, 1);
         while (1) {
-            move_cannon(&pos_cannon1);
+            navswitch_update();
+            move_cannon(&pos_cannon1, &pos_cannon2);
             cannonball_fire(pos_cannon1);
             tinygl_update();
-            navswitch_update();
             pacer_wait();
             // game_over_ticks--;
 

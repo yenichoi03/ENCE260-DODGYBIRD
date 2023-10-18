@@ -8,27 +8,25 @@
 
 
 
-void move_cannon(tinygl_point_t *pos_cannon1) 
+void move_cannon(tinygl_point_t *pos_cannon1, tinygl_point_t* pos_cannon2) 
 {
     /* Can only shoot from rows 0-5*/
-    
-    static tinygl_point_t pos_cannon2 = {3, 5};
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
         if ((*pos_cannon1).y > 0) {
-            tinygl_draw_line(*pos_cannon1, pos_cannon2, 0);
+            tinygl_draw_line(*pos_cannon1, *pos_cannon2, 0);
             (*pos_cannon1).y--;
-            pos_cannon2.y--;
-            tinygl_draw_line(*pos_cannon1, pos_cannon2, 1);
+            (*pos_cannon2).y--;
+            tinygl_draw_line(*pos_cannon1, *pos_cannon2, 1);
         }
     }
 
     if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
         if ((*pos_cannon1).y < LEDMAT_ROWS_NUM - 2) {
-            tinygl_draw_line(*pos_cannon1, pos_cannon2, 0);
+            tinygl_draw_line(*pos_cannon1, *pos_cannon2, 0);
             (*pos_cannon1).y++;
-            pos_cannon2.y++;
-            tinygl_draw_line(*pos_cannon1, pos_cannon2, 1);
+            (*pos_cannon2).y++;
+            tinygl_draw_line(*pos_cannon1, *pos_cannon2, 1);
         }
     }
 
