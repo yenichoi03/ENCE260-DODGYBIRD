@@ -31,6 +31,7 @@
 
 #include <stdint.h>
 
+// Constants for game control
 #define PACER_RATE 500
 #define MESSAGE_RATE 20
 
