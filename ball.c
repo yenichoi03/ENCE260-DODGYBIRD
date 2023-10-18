@@ -56,15 +56,19 @@ void ball_incoming(void)
 {
     static tinygl_point_t life_pos1 = {2, 0};
     static tinygl_point_t life_pos2 = {5, 0};
-    static tinygl_point_t life_pos3 = {2, 0};
-    static tinygl_point_t life_pos4 = {4, 0};
-    tinygl_draw_line(life_pos1, life_pos2, 1);
+    static tinygl_point_t life_pos3 = {2, 0}; //Should delete 
+    static tinygl_point_t life_pos4 = {4, 0}; //Should delete
+    static tinygl_point_t pos_ball = {0, 0}; 
+
     static int count = 0;
     static bool is_ball = false;
-    static tinygl_point_t pos_ball = {0, 0}; 
-    static uint8_t row = 0;
-    uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
     bool flash = false; 
+
+    static uint8_t row = 0;
+
+    uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
+    tinygl_draw_line(life_pos1, life_pos2, 1);
+
 
     if (ir_uart_read_ready_p()) {
         row = ir_uart_getc(); 
@@ -112,8 +116,7 @@ void ball_incoming(void)
             
             if (tinygl_pixel_get(pos_ball) == 1) { 
                 flash = true;
-            }
-
+            }   
             tinygl_draw_point(pos_ball, 1);
         }
 
@@ -138,9 +141,10 @@ void ball_incoming(void)
             tinygl_draw_line(life_pos1, life_pos2, 1);
             if (life_pos1.x >= 4 ) {
                 tinygl_draw_line(life_pos3, life_pos4, 0);
-            }
             
+            } 
         }
     
     }
-}   
+}  
+
