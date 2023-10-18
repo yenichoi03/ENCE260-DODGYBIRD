@@ -7,56 +7,11 @@
 #include "timer.h"
 #include "usart1.h"
 #include "ledmat.h"
+#include "move.h"
 
 
 
-/** Define PIO pins driving LED matrix rows.  */
-static const pio_t rows[] =
-{
-    LEDMAT_ROW1_PIO, LEDMAT_ROW2_PIO, LEDMAT_ROW3_PIO, 
-    LEDMAT_ROW4_PIO, LEDMAT_ROW5_PIO, LEDMAT_ROW6_PIO,
-    LEDMAT_ROW7_PIO
-};
 
-/** Define PIO pins driving LED matrix columns.  */
-static const pio_t cols[] =
-{
-    LEDMAT_COL1_PIO, LEDMAT_COL2_PIO, LEDMAT_COL3_PIO,
-    LEDMAT_COL4_PIO, LEDMAT_COL5_PIO
-};
-
-
-void flashing_display(void) 
-{
-    uint8_t current_row;
-    uint8_t current_column;
-    uint16_t count = 0;
-
-    for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
-        /* The rows are active low so configure PIO as an initially high output.  */
-        pio_config_set(rows[current_row], PIO_OUTPUT_LOW);
-    }
-
-    for (current_column = 0; current_column < LEDMAT_COLS_NUM; current_column++) {
-        /* The columns are active low so configure PIO as an initially high output.  */
-        pio_config_set (cols[current_column], PIO_OUTPUT_LOW);
-    }
-
-    
-    while (count < 50) {
-        pacer_wait();
-        count++;
-    }
-
-    ledmat_init();
-    count = 0;
-
-    while (count < 80) {
-        pacer_wait();
-        count++;
-    }
-
-}
 
 void move_cannon(void) 
 {
@@ -138,7 +93,10 @@ void move_bird(void)
     static tinygl_point_t life_pos3 = {2, 0};
     static tinygl_point_t life_pos4 = {4, 0};
     tinygl_draw_line(life_pos1, life_pos2, 1);
- 
+    
+    tinygl_draw_line(pos1, pos2, 1);
+    tinygl_draw_point(pos_tip, 1);
+
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
         if (pos1.y > 2) {
