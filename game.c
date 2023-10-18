@@ -24,7 +24,6 @@ int main(void)
     ir_uart_init();
     pacer_init(PACER_RATE);
     display_init();
-    timer_init();
 
     /* Initialise tinygl. */
     tinygl_init(PACER_RATE);
@@ -77,10 +76,9 @@ int main(void)
 
     character_select();
     tinygl_clear();
-    // uint16_t game_ticks = 10000;
-    tinygl_point_t pos_cannon1 = {4, 5};
-    tinygl_point_t pos_cannon2 = {3, 5};
 
+
+    int32_t game_ticks = 10000;
 
     if (select_char == 1){
         while (1) {
@@ -89,33 +87,48 @@ int main(void)
             tinygl_update();
             navswitch_update();
             pacer_wait();
+            game_ticks--;
+
+            if (game_ticks <= 0) {
+                break;
+            }
         }
     }
 
-    if (select_char == 2){
+    if (select_char == 2) {
+
+        tinygl_point_t pos_cannon1 = {4, 5};
+        tinygl_point_t pos_cannon2 = {3, 5};
         tinygl_draw_line(pos_cannon1, pos_cannon2, 1);
+
         while (1) {
-            navswitch_update();
             move_cannon(&pos_cannon1, &pos_cannon2);
             cannonball_fire(pos_cannon1);
             tinygl_update();
+            navswitch_update();
             pacer_wait();
-        }
-    }
+            game_ticks--;
 
-    // tinygl_text("GAME OVER");
+            if (game_ticks <= 0) {
+                break;
+            }
+
+        }
+
+    }
+ 
 
     // while(1) {
     //     game_ticks++;
     //     pacer_wait(); 
     //     tinygl_update();
 
-    //     if (game_ticks == 5500) {
+    //     if (game_ticks > 5500 ) {
     //         break;
     //     }
     // }
     
-    display_clear();
+    tinygl_clear();
     return 0;
 
 }

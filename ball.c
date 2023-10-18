@@ -13,7 +13,7 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
     static tinygl_point_t pos_ball = {0, 0}; 
 
 
-    if (navswitch_release_event_p(NAVSWITCH_PUSH)) {
+    if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         is_ball = false;
     }
 
@@ -52,7 +52,7 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
 }
 
 
-bool ball_incoming(void)
+void ball_incoming(void)
 {
     static tinygl_point_t life_pos1 = {2, 0};
     static tinygl_point_t life_pos2 = {5, 0};
@@ -66,7 +66,7 @@ bool ball_incoming(void)
 
 
     uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
-    tinygl_draw_line(life_pos1, life_pos2, 1);
+    tinygl_draw_line(life_pos1, life_pos2, 1); //healthline
 
 
     if (ir_uart_read_ready_p()) {
@@ -129,31 +129,35 @@ bool ball_incoming(void)
             tinygl_draw_point(pos_ball, 0);
             is_ball = false;
             count = 0;
-        }
+        } 
         
-    }
+        if (flash) {
+            flashing_display();
+            tinygl_draw_line(life_pos1, life_pos2, 0);
+            life_pos1.x++;
+            tinygl_draw_line(life_pos1, life_pos2, 1);
+            if (life_pos1.x >= 4 ) {
+                tinygl_clear();
+            }
+            
+        }
 
-    return flash;
+
+        // static uint8_t hit = 0;
+
+        // if (flash == true) {
+        //     flashing_display();
+        //     hit++;
+
+        //     tinygl_draw_line(life_pos1, life_pos2, 0);
+        //     life_pos1.x++;
+        //     tinygl_draw_line(life_pos1, life_pos2, 1);
+        //     if (hit > 2) {
+        //         return 1;
+        //     } 
+        // }
+
+    }
 }  
 
-bool collision(void) 
-{
-    static tinygl_point_t life_pos1 = {2, 0};
-    static tinygl_point_t life_pos2 = {5, 0};
-    static uint8_t hit = 0;
-
-    if (ball_incoming()) {
-        flashing_display();
-        hit++;
-        /*Will need to create a struct*/
-        tinygl_draw_line(life_pos1, life_pos2, 0);
-        life_pos1.x++;
-        tinygl_draw_line(life_pos1, life_pos2, 1);
-        if (hit > 2) {
-            return true;
-        } 
-    }
-
-    return false;
-}
 

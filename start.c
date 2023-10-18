@@ -93,7 +93,7 @@ void sync(void)
 
 void character_select(void) 
 {
-    // tinygl_init(PACER_RATE);
+
 
     uint8_t current_column = 0;
     uint16_t count = 0;
@@ -101,7 +101,6 @@ void character_select(void)
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
 
         tinygl_text("  BIRD   ");
-        // timer_get();
 
         while (count < 2500) {
 

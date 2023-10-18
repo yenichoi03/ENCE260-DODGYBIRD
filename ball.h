@@ -35,9 +35,9 @@
 
 void cannonball_fire(tinygl_point_t pos_cannon1);
 
-bool ball_incoming(void);
+void ball_incoming(void);
 
-bool collision(void); 
+// bool collision(void); 
 
 
 #endif 
