@@ -31,6 +31,7 @@
 
 #include "system.h"
 
+void flashing_display(void);
 
 void display_character(char character);
 /* A character buffer */
