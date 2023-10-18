@@ -12,35 +12,37 @@
 
 
 
-
-void move_cannon(void) 
+void move_cannon(tinygl_point_t *pos_cannon1) 
 {
     /* Can only shoot from rows 0-5*/
     
-    static tinygl_point_t pos1 = {4, 3};
-    static tinygl_point_t pos2 = {3, 3};
-    static tinygl_point_t pos_ball = {0, 0}; 
+    static tinygl_point_t pos_cannon2 = {3, 3};
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
-        if (pos1.y > 0) {
-            tinygl_draw_line(pos1, pos2, 0);
-            pos1.y--;
-            pos2.y--;
-            tinygl_draw_line(pos1, pos2, 1);
+        if ((*pos_cannon1).y > 0) {
+            tinygl_draw_line(*pos_cannon1, pos_cannon2, 0);
+            (*pos_cannon1).y--;
+            pos_cannon2.y--;
+            tinygl_draw_line(*pos_cannon1, pos_cannon2, 1);
         }
     }
 
     if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
-        if (pos1.y < LEDMAT_ROWS_NUM - 2) {
-            tinygl_draw_line(pos1, pos2, 0);
-            pos1.y++;
-            pos2.y++;
-            tinygl_draw_line(pos1, pos2, 1);
+        if ((*pos_cannon1).y < LEDMAT_ROWS_NUM - 2) {
+            tinygl_draw_line(*pos_cannon1, pos_cannon2, 0);
+            (*pos_cannon1).y++;
+            pos_cannon2.y++;
+            tinygl_draw_line(*pos_cannon1, pos_cannon2, 1);
         }
     }
 
+}
+
+void cannonball_fire(tinygl_point_t pos_cannon1)
+{
     static int count = 0;
     static bool is_ball = false;
+    static tinygl_point_t pos_ball = {0, 0}; 
 
     if (navswitch_release_event_p(NAVSWITCH_PUSH)) {
         is_ball = true;
@@ -51,7 +53,7 @@ void move_cannon(void)
 
         if (count == 50) {
             pos_ball.x = 2;
-            pos_ball.y = pos1.y;
+            pos_ball.y = pos_cannon1.y;
             tinygl_draw_point(pos_ball, 1);
 
         }
@@ -78,7 +80,6 @@ void move_cannon(void)
             }
         }
     }
-
 }
 
 

@@ -30,6 +30,7 @@
 #define MOVE_H
 
 #include "system.h"
+#include "tinygl.h"
 
 /** Define PIO pins driving LED matrix rows.  */
 static const pio_t rows[] =
@@ -49,8 +50,10 @@ static const pio_t cols[] =
 void display_character(char character);
 /* A character buffer */
 
-void move_cannon(void);
+void move_cannon(tinygl_point_t* pos_cannon1);
 /* moves the cannon character vertically */
+
+void cannonball_fire(tinygl_point_t pos_cannon1);
 
 void move_bird(void);
 /* moves the bird character around the screen */

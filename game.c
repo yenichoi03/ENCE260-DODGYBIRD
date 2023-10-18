@@ -78,6 +78,7 @@ int main(void)
     flashing_display();
     tinygl_clear();
     // uint16_t game_over_ticks = 5000;
+    tinygl_point_t pos_cannon1 = {4, 3};
 
     if (select_char == 1){
         while (1) {
@@ -97,7 +98,8 @@ int main(void)
 
     if (select_char == 2){
         while (1) {
-            move_cannon();
+            move_cannon(&pos_cannon1);
+            cannonball_fire(pos_cannon1);
             tinygl_update();
             navswitch_update();
             pacer_wait();
