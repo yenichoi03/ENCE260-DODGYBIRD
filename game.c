@@ -14,6 +14,7 @@
 #include "timer0.h"
 
 
+
 #define PACER_RATE 500
 #define MESSAGE_RATE 20
 
@@ -60,6 +61,26 @@ void user_select(void)
     if (navswitch_release_event_p(NAVSWITCH_PUSH)) {
         tinygl_clear();
     }
+}
+
+void sync(void) {
+    tinygl_text("SYNCING ");
+    while (1) {
+         /* Call the tinygl update function. */
+        pacer_wait(); // Wait until next pacer tick.  
+        tinygl_update();  // Update display (refresh display and update message).  
+        navswitch_update();
+        if (navswitch_push_event_p (NAVSWITCH_NORTH)) {
+          ir_uart_putc ('S');
+          break;
+            }
+        else if (ir_uart_read_ready_p ())
+        {
+            if (ir_uart_getc() == 'S'){
+                break;
+            }
+        }
+}
 }
 
 void character_select(void) 
@@ -117,7 +138,7 @@ void character_select(void)
             count++;  
         }
     }
-
+    sync();
     tinygl_font_set(&font5x7_1);
     tinygl_text("  3  2  1  GO!");
     
@@ -132,7 +153,6 @@ void character_select(void)
     }
 }
 
-    
 
 
 int main(void) 
@@ -150,8 +170,8 @@ int main(void)
     tinygl_font_set(&font3x5_1);
     tinygl_text_speed_set(MESSAGE_RATE);
     tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
-
-
+    /* Sync both funkits*/
+    // Check the initial position of the navigation switch.    
     /* Set the message using tinygl_text().  */
     tinygl_text("CHOOSE CHARACTER ");
     
