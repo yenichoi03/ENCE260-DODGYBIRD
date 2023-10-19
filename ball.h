@@ -1,4 +1,4 @@
-/**  @file   move.h
+/**  @file   ball.h
      @author Yeni Choi, Mukhriz Khairudin 
      @date   14 Oct 2023
      @brief  Cannon ball driver and reader
