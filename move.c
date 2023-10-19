@@ -1,3 +1,9 @@
+/**  @file   move.c
+     @author Yeni Choi, Mukhriz Khairudin 
+     @date   14 Oct 2023
+     @brief  Moves Bird and Cannon
+    
+*/
 #include "system.h"
 #include "navswitch.h"
 #include "pio.h"
