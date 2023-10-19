@@ -5,7 +5,7 @@
 #include "usart1.h"
 #include "start.h"
 
-
+/*fires ball from cannon*/
 void cannonball_fire(tinygl_point_t pos_cannon1)
 {
     static int count = 0;
@@ -15,7 +15,7 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         is_ball = false;
     }
-
+    /*Ball is fired*/
     if (!is_ball) {
         count++;
 
@@ -49,7 +49,7 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
     }
 }
 
-
+/*Recieves ball from cannon*/
 void ball_incoming(void)
 {
     static tinygl_point_t life_pos1 = {2, 0};
@@ -62,7 +62,9 @@ void ball_incoming(void)
     bool flash = false; 
 
     uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
-    tinygl_draw_line(life_pos1, life_pos2, 1); //healthline
+
+    /*This draws the healthline*/
+    tinygl_draw_line(life_pos1, life_pos2, 1); 
 
 
     if (ir_uart_read_ready_p()) {
@@ -71,13 +73,13 @@ void ball_incoming(void)
             is_ball = true;
         }
     }
-
+    /*ball is fired*/
     if (is_ball) {
         count++;
 
         if (count == 50) {
             pos_ball.x = 0;
-            pos_ball.y = row_num[row]; // this has to be the position where the cannon fires
+            pos_ball.y = row_num[row]; 
             tinygl_draw_point(pos_ball, 1);
         }
 
