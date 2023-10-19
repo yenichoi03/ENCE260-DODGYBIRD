@@ -15,26 +15,22 @@
 #include "ball.h"
 
 
-
+/* Allows gameplayt for both cannon and bird characters*/
 int main(void) 
 {
 
-    ///Initialise libraries and components
     system_init();
     ir_uart_init();
     pacer_init(PACER_RATE);
     display_init();
 
-    ///Initialize tinygl library for LED matrix display
     tinygl_init(PACER_RATE);
     tinygl_font_set(&font3x5_1);
     tinygl_text_speed_set(MESSAGE_RATE);
     tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
   
-    // Display an initial message to choose a character
     tinygl_text("CHOOSE CHARACTER ");
     
-    // Wait for the push event of the navswitch to start character selection
     while (navswitch_up_p(NAVSWITCH_PUSH)) {
         user_select();
         pacer_wait();  
@@ -46,7 +42,7 @@ int main(void)
     uint8_t current_column = 0;
     int select_char = 0;
   
-    // Character selection loop
+    /* Character selection loop */
     while (1) {
         pacer_wait();
         display_column(bitmap1[current_column], current_column);
@@ -57,18 +53,18 @@ int main(void)
         }  
 
         if (navswitch_push_event_p(NAVSWITCH_NORTH)){
-            select_char = 1; //picked bird 
+            select_char = 1; 
             break;
         }
         if (navswitch_push_event_p(NAVSWITCH_SOUTH)){
-            select_char = 2; //picked cannon
+            select_char = 2; 
             break;
         }   
 
         navswitch_update(); 
     }  
 
-    // Character selection is complete, move to the game
+    /* Character selection is complete, move to the game */
     character_select();
     tinygl_clear();
 
@@ -90,7 +86,7 @@ int main(void)
     }
 
     if (select_char == 2) {
-        // Initialize cannon position
+        /* Initialize cannon position */
         tinygl_point_t pos_cannon1 = {4, 5};
         tinygl_point_t pos_cannon2 = {3, 5};
         tinygl_draw_line(pos_cannon1, pos_cannon2, 1);
