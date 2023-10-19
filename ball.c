@@ -142,21 +142,6 @@ void ball_incoming(void)
             
         }
 
-
-        // static uint8_t hit = 0;
-
-        // if (flash == true) {
-        //     flashing_display();
-        //     hit++;
-
-        //     tinygl_draw_line(life_pos1, life_pos2, 0);
-        //     life_pos1.x++;
-        //     tinygl_draw_line(life_pos1, life_pos2, 1);
-        //     if (hit > 2) {
-        //         return 1;
-        //     } 
-        // }
-
     }
 }  
 

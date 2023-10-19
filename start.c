@@ -104,6 +104,7 @@ void sync(void)
     }
 }
 
+
 /* Function for character selection based on NavSwitch input. */
 void character_select(void) 
 {

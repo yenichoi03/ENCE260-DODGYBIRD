@@ -77,7 +77,6 @@ int main(void)
     character_select();
     tinygl_clear();
 
-
     int32_t game_ticks = 10000;
 
     if (select_char == 1){
@@ -116,19 +115,11 @@ int main(void)
         }
 
     }
- 
-
-    // while(1) {
-    //     game_ticks++;
-    //     pacer_wait(); 
-    //     tinygl_update();
-
-    //     if (game_ticks > 5500 ) {
-    //         break;
-    //     }
-    // }
     
     tinygl_clear();
+    display_clear();
+    ledmat_init();
+
     return 0;
 
 }

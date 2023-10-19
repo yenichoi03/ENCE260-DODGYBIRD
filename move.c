@@ -60,7 +60,7 @@ void move_bird(void)
         if (pos1.y > 2) {
             // Clear the previous bird position
             tinygl_draw_point(pos_tip, OFF);
-            tinygl_draw_line(pos1, pos2, ON);
+            tinygl_draw_line(pos1, pos2, OFF);
             // Move the bird up
             pos1.y--;
             pos2.y--;
