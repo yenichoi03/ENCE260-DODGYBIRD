@@ -1,7 +1,7 @@
 # File:   Makefile
-# Author: M. P. Hayes, UCECE
-# Date:   12 Sep 2010
-# Descr:  Makefile for game
+# Author: Yeni Choi, Mukhriz Khairudin
+# Date:   14 October 2023
+# Descr:  Makefile for funkit game(Dodgy Bird)
 
 # Definitions.
 CC = avr-gcc
