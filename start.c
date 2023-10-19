@@ -1,7 +1,7 @@
 /**  @file   start.c
      @author Yeni Choi, Mukhriz Khairudin 
      @date   14 Oct 2023
-     @brief  Cannon ball driver and reader
+     @brief  Display module
     
 */
 #include "system.h"
