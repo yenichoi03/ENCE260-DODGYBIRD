@@ -1,29 +1,8 @@
 /**  @file   move.h
      @author Yeni Choi, Mukhriz Khairudin
      @date   14 Oct 2023
-     @brief  LED driver.
-
-    @defgroup LED LED driver
+     @brief  the starting module of the game
        
-    This module implements the firing of the cannon
-
-    Here's an example application that turns on a LED:
-
-    @code
-    #include "led.h"
-
-    void main (void)
-    {
-        system_init ();
-        led_init ();
-
-        led_set (LED1, 1);
-
-        while (1)
-        {
-        }
-    }
-    @endcode
 */
 
 #ifndef START_H
@@ -39,7 +18,7 @@ static const uint8_t bitmap1[] = {0, 4, 38, 36, 0};
 static const uint8_t bitmap2[] = {0, 16, 24, 16, 0};
 static const uint8_t bitmap3[] = {0, 0, 0, 16, 16, 0};
 
-
+/* Function to create a flashing display effect. */
 void flashing_display(void);
 
 /* Function to display a specific column of the LED matrix. */

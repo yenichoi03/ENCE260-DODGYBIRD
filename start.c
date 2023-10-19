@@ -25,28 +25,22 @@ void flashing_display(void)
     uint8_t current_column;
     uint16_t count = 0;
 
-    /* Initialize rows and columns of the LED matrix. */
     for (current_row = 0; current_row < LEDMAT_ROWS_NUM; current_row++) {
-        /* The rows are active low so configure PIO as an initially high output.  */
         pio_config_set(rows[current_row], PIO_OUTPUT_LOW);
     }
 
     for (current_column = 0; current_column < LEDMAT_COLS_NUM; current_column++) {
-        /* The columns are active low so configure PIO as an initially high output.  */
         pio_config_set (cols[current_column], PIO_OUTPUT_LOW);
     }
 
-    /* Wait for a while. */
     while (count < FLASHING_DISPLAY_COUNT) {
         pacer_wait();
         count++;
     }
 
-    /* Initialize the LED matrix and reset the count. */
     ledmat_init();
     count = 0;
 
-    /* Wait for another interval. */
     while (count < FLASHING_DISPLAY_INIT_DELAY) {
         pacer_wait();
         count++;
@@ -87,9 +81,8 @@ void sync(void)
     tinygl_font_set(&font3x5_1);
     tinygl_text("PUSH TO START ");
     while (1) {
-         /* Call the tinygl update function. */
-        pacer_wait(); // Wait until next pacer tick.  
-        tinygl_update();  // Update display (refresh display and update message).  
+        pacer_wait();  
+        tinygl_update();   
         navswitch_update();
         if (navswitch_push_event_p(NAVSWITCH_NORTH) || navswitch_push_event_p(NAVSWITCH_EAST) || navswitch_push_event_p(NAVSWITCH_SOUTH) || navswitch_push_event_p(NAVSWITCH_WEST)) {
           ir_uart_putc ('S');
@@ -108,19 +101,15 @@ void sync(void)
 /* Function for character selection based on NavSwitch input. */
 void character_select(void) 
 {
-
-
     uint8_t current_column = 0;
     uint16_t count = 0;
 
     if (navswitch_push_event_p(NAVSWITCH_NORTH)) {
-
         tinygl_text("  BIRD   ");
 
         while (count < CHARACTER_SELECTION_DELAY) {
-
-            pacer_wait(); // Wait until next pacer tick.  
-            tinygl_update();  // Update display (refresh display and update message).  
+            pacer_wait();   
+            tinygl_update();   
             count++;
         }
         
@@ -138,13 +127,11 @@ void character_select(void)
     }
 
     if (navswitch_push_event_p(NAVSWITCH_SOUTH)) {
-
         tinygl_text("  CANNON   ");
     
         while (count < CHARACTER_SELECTION_DELAY_BETWEEN) {
-
-            pacer_wait(); // Wait until next pacer tick.  
-            tinygl_update();  // Update display (refresh display and update message).  
+            pacer_wait();  
+            tinygl_update();  
             count++;
         }
 
@@ -165,8 +152,8 @@ void character_select(void)
     tinygl_text("  3  2  1  GO!");
     
     while (count < SYNC_DELAY) {
-        pacer_wait(); // Wait until next pacer tick.  
-        tinygl_update();  // Update display (refresh display and update message).  
+        pacer_wait();   
+        tinygl_update();   
         count++;
     }
 
