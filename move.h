@@ -49,12 +49,12 @@ static const pio_t cols[] =
 
 
 void move_cannon(tinygl_point_t* pos_cannon1, tinygl_point_t* pos_cannon2);
-/** Move the cannon character vertically.
+/** Move the cannon character vertically using the navswitch button
    pos_cannon1 Pointer to the starting position of the cannon.
    pos_cannon2 Pointer to the ending position of the cannon.
 */
 void move_bird(void);
-/* moves the bird character around the screen */
+/* moves the bird character around the screen using the navswitch button*/
 
 
 
