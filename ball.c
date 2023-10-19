@@ -12,7 +12,6 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
     static bool is_ball = true;
     static tinygl_point_t pos_ball = {0, 0}; 
 
-
     if (navswitch_push_event_p(NAVSWITCH_PUSH)) {
         is_ball = false;
     }
@@ -24,7 +23,6 @@ void cannonball_fire(tinygl_point_t pos_cannon1)
             pos_ball.x = 2;
             pos_ball.y = pos_cannon1.y;
             tinygl_draw_point(pos_ball, 1);
-
         }
 
         if (count == 150) {
@@ -59,11 +57,9 @@ void ball_incoming(void)
     static tinygl_point_t pos_ball = {0, 0}; 
 
     static int count = 0;
+    static uint8_t row = 0;
     static bool is_ball = false;
     bool flash = false; 
-
-    static uint8_t row = 0;
-
 
     uint8_t row_num[LEDMAT_ROWS_NUM - 1] = {6, 5, 4, 3, 2, 1};
     tinygl_draw_line(life_pos1, life_pos2, 1); //healthline
@@ -139,9 +135,7 @@ void ball_incoming(void)
             if (life_pos1.x >= 4 ) {
                 tinygl_clear();
             }
-            
         }
-
     }
 }  
 
