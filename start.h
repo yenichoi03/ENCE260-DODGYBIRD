@@ -1,4 +1,4 @@
-/**  @file   move.h
+/**  @file   start.h
      @author Yeni Choi, Mukhriz Khairudin
      @date   14 Oct 2023
      @brief  the starting module of the game
