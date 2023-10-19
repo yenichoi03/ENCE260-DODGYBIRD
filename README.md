@@ -3,7 +3,7 @@ DODGY BIRD INTRUCTIONS
 
 PREPARATION 
 
-In VScode or other desired IDE, open the folder called group_416 found in courses -> ence260 -> ence260-ucfk4 -> assignment. Ensure the terminal leads to the correct directory by using bash commands. Next, connect a USB mini cable to both funkits. A yellow led should light up to indicate it is connected. Once completed, you are now ready to compile the program and begin the game. In the terminal, enter 'make' followed by 'make program'. If the program has been previously uploaded then you can press the button S3 for a few seconds followed by the S2 button as well.
+In VScode or other desired IDE, open the folder called group_416 found in courses -> ence260 -> ence260-ucfk4 -> assignment. Ensure the terminal leads to the correct directory by using bash commands. Next, connect a USB mini cable to both funkits. A yellow led should light up to indicate it is connected. Once completed, you are now ready to compile the program and begin the game. In the terminal, enter 'make' followed by 'make program'. If the program has been previously uploaded then you can press the button S1 for a few seconds followed by the S2 button as well.
 
 Ensure you and your partner are holding the funkits near to each other in the correct orientation, so that the infrared sensor of your funkit board directly faces the recieving component of the other player's funkit board. These boards should be relatively close to one another, away from other funkits and out of direct light sources to reduce interference.
 

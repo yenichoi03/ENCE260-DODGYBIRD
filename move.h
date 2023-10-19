@@ -1,5 +1,5 @@
 /**  @file   move.h
-     @author Yeni Choi
+     @author Yeni Choi, Mukhriz Khairudin
      @date   14 Oct 2023
      @brief  LED driver.
 

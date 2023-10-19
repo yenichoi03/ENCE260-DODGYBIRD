@@ -19,32 +19,26 @@
 int main(void) 
 {
 
-    /* Initialise libraries*/
+    ///Initialise libraries and components
     system_init();
     ir_uart_init();
     pacer_init(PACER_RATE);
     display_init();
 
-    /* Initialise tinygl. */
+    ///Initialize tinygl library for LED matrix display
     tinygl_init(PACER_RATE);
     tinygl_font_set(&font3x5_1);
     tinygl_text_speed_set(MESSAGE_RATE);
     tinygl_text_mode_set(TINYGL_TEXT_MODE_SCROLL);
-    /* Sync both funkits*/
-    // Check the initial position of the navigation switch.    
-    /* Set the message using tinygl_text().  */
+  
+    // Display an initial message to choose a character
     tinygl_text("CHOOSE CHARACTER ");
     
-
-
-
+    // Wait for the push event of the navswitch to start character selection
     while (navswitch_up_p(NAVSWITCH_PUSH)) {
-
         user_select();
-
-        /* Call the tinygl update function. */
-        pacer_wait(); // Wait until next pacer tick.  
-        tinygl_update();  // Update display (refresh display and update message).  
+        pacer_wait();  
+        tinygl_update(); 
         navswitch_update();
     }
     
@@ -52,7 +46,7 @@ int main(void)
     uint8_t current_column = 0;
     int select_char = 0;
   
-
+    // Character selection loop
     while (1) {
         pacer_wait();
         display_column(bitmap1[current_column], current_column);
@@ -72,8 +66,9 @@ int main(void)
         }   
 
         navswitch_update(); 
-    }    
+    }  
 
+    // Character selection is complete, move to the game
     character_select();
     tinygl_clear();
 
@@ -95,7 +90,7 @@ int main(void)
     }
 
     if (select_char == 2) {
-
+        // Initialize cannon position
         tinygl_point_t pos_cannon1 = {4, 5};
         tinygl_point_t pos_cannon2 = {3, 5};
         tinygl_draw_line(pos_cannon1, pos_cannon2, 1);
@@ -123,6 +118,4 @@ int main(void)
     return 0;
 
 }
-
-
 
