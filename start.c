@@ -1,3 +1,9 @@
+/**  @file   start.c
+     @author Yeni Choi, Mukhriz Khairudin 
+     @date   14 Oct 2023
+     @brief  Cannon ball driver and reader
+    
+*/
 #include "system.h"
 #include "pacer.h"
 #include "pio.h"
